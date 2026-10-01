@@ -21,3 +21,10 @@ The trade-off is that the algorithm uses repeated integer exponentiation (`x ** 
 ## Edge case
 
 The function rejects negative `n` and non-positive `k` with `ValueError`. For `k == 1` it returns `n` unchanged. For `n == 0` or `n == 1` it returns `n` immediately. Non-integer inputs raise `TypeError` from Python's own arithmetic checks.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
